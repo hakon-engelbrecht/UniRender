@@ -40,6 +40,14 @@ public:
     void mainloop();
     void update_fullscreen();
 
+    void set_size(int width, int height);
+    void set_real_size(int width, int height);
+    void set_fullscreen(bool fullscreen);
+
+    double get_delta_time();
+    GLFWwindow* get_glfw_window();
+    bool get_fullscreen();
+
 private:
 
     GLFWmonitor* get_current_monitor();

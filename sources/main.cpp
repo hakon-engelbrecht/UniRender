@@ -1,10 +1,8 @@
-#include "window.h"
+#include "common.h"
 
 int main()
 {
-    Window window = Window();
-
-    window.mainloop();
-
+    UniRender app = common::get_app();
+    app.mainloop();
     return 0;
 }

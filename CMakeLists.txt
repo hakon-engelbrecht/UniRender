@@ -154,16 +154,26 @@ FetchContent_GetProperties(imgui)
 if (NOT imgui_POPULATED)
     # Downloaden, wenn dies noch nicht passiert ist
     FetchContent_Populate(imgui)
-
-    # Unbenötigte Features deaktivieren
-    #[[set(IMGUI_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-    set(IMGUI_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-    set(IMGUI_BUILD_DEMO OFF CACHE BOOL "" FORCE)]]
-
 endif()
 
 file(GLOB IMGUI_SOURCES ${imgui_SOURCE_DIR}/*.cpp)
 add_library(imgui STATIC ${IMGUI_SOURCES})
+
+################################# GLM ######################################
+
+FetchContent_Declare(
+    glm
+    URL https://github.com/g-truc/glm/archive/refs/tags/1.0.1.zip
+    DOWNLOAD_EXTRACT_TIMESTAMP true
+)
+
+FetchContent_GetProperties(glm)
+if (NOT glm_POPULATED)
+    # Downloaden, wenn dies noch nicht passiert ist
+    FetchContent_Populate(glm)
+
+    add_subdirectory(${glm_SOURCE_DIR} ${glm_BINARY_DIR})
+endif()
 
 ################################ Projekt ######################################
 
@@ -197,7 +207,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${OPENGL_INCLUDE_DIR} ${CMAKE_
 
 # Bibliotheken zum Projekt hinzufügen
 target_link_libraries(${PROJECT_NAME} ${CMAKE_DL_LIBS} ${OPENGL_gl_LIBRARY})
-target_link_libraries(${PROJECT_NAME} glfw cglm assimp imgui)
+target_link_libraries(${PROJECT_NAME} glfw cglm assimp imgui glm)
 
 if(UNIX AND NOT APPLE)
     # Unter Linux muss die Mathebibliothek extra gelinkt werden, wenn Funktionen
@@ -241,6 +251,7 @@ set(dependency_targets
     cglm
     assimp
     imgui
+    glm
     UpdateAssimpLibsDebugSymbolsAndDLLs
     uninstall
     zlib

@@ -99,6 +99,32 @@ void Window::update_fullscreen() {
     }
 }
 
+void Window::set_size(int width, int height) {
+    _width = width;
+    _height = height;
+}
+
+void Window::set_real_size(int width, int height) {
+    _real_width = width;
+    _real_height = height;
+}
+
+void Window::set_fullscreen(bool fullscreen) {
+    _is_fullscreen = fullscreen;
+}
+
+double Window::get_delta_time() {
+    return _delta_time;
+}
+
+GLFWwindow* Window::get_glfw_window() {
+    return _glfw_window;
+}
+
+bool Window::get_fullscreen() {
+    return _is_fullscreen;
+}
+
 /**********************************************************************************************************************/
 // private
 
